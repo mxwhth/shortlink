@@ -1,0 +1,82 @@
+version: "3.5"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: link
+      MYSQL_USER: user_dev
+      MYSQL_PASSWORD: user_dev
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-p${MYSQL_ROOT_PASSWORD}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  redis:
+    container_name: redis
+    image: redis:7
+    command: ["redis-server", "--requirepass", "123456"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    environment:
+      - REDIS_PASSWORD=123456
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "123456", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  redisinsight:
+    container_name: redisinsight
+    image: redis/redisinsight:latest
+    ports:
+      - "5540:5540"
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      ## redis://default@redis:6379
+      - REDISINSIGHT_REDIS_HOSTS=local:redis:6379:123456
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:5540" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  nacos-server:
+    image: nacos/nacos-server:v2.3.2
+    container_name: nacos-server
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8848:8848"
+      ##- "9848:9848"
+    environment:
+      MODE: standalone
+    volumes:
+      - ./nacos/application.properties:/home/nacos/conf/application.properties
+      - nacos_data:/home/nacos/data
+
+volumes:
+  mysql_data:
+    driver: local
+  redis_data:
+    driver: local
+  nacos_data:
+    driver: local
