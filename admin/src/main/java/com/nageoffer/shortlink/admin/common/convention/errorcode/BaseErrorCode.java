@@ -17,10 +17,6 @@
 
 package com.nageoffer.shortlink.admin.common.convention.errorcode;
 
-/**
- * 基础错误码定义
- * 公众号：马丁玩编程，回复：加群，添加马哥微信（备注：link）获取项目资料
- */
 public enum BaseErrorCode implements IErrorCode {
 
     // ========== 一级宏观错误码 客户端错误 ==========
