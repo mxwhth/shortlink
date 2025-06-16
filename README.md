@@ -1,12 +1,3 @@
-[![build status](https://github.com/opengoofy/hippo4j/actions/workflows/ci.yml/badge.svg?event=push)](https://github.com/opengoofy/hippo4j)
-[![codecov](https://codecov.io/gh/opengoofy/hippo4j/branch/develop/graph/badge.svg?token=WBUVJN107I)](https://codecov.io/gh/opengoofy/hippo4j)
-![maven](https://img.shields.io/maven-central/v/com.alibaba.otter/canal.svg)
-[![license](https://img.shields.io/badge/license-Apache--2.0-green.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-![](https://img.shields.io/github/contributors/opengoofy/hippo4j)
-[![percentage of issues still open](http://isitmaintained.com/badge/open/opengoofy/hippo4j.svg)](http://isitmaintained.com/project/opengoofy/hippo4j "percentage of issues still open")
-
-![GitHub last commit (branch)](https://img.shields.io/github/last-commit/opengoofy/hippo4j/develop?color=orange)
-
 ## 简介
 
 ![](https://oss.open8gu.com/image-20231115133642504.png)
@@ -35,19 +26,6 @@ URL。短链接通常只包含几个字符，而原始的长 URL 可能会非常
 - **美化**：短链接通常更美观、简洁，不会包含一大串字符。
 - **统计和分析**：可以追踪短链接的访问情况，了解用户的行为和喜好。
 
-## 官方文档
-
-- 什么是 SaaS 短链接系统：[https://nageoffer.com/shortlink](https://nageoffer.com/shortlink)
-- 🔥SaaS 短链接视频教程：[https://nageoffer.com/shortlink/video](https://nageoffer.com/shortlink/video)
-
----
-
-在线体验地址：[SaaS短链接演示环境](http://shortlink.nageoffer.com)
-
-受限于网络安全规则，短链接跳转的目标网址仅支持 [拿个offer](https://nageoffer.com)、[知乎](https://zhihu.com)、[掘金](https://juejin.cn)、[博客园](https://cnblogs.com) 域名下所属链接。
-
----
-
 ## 技术架构
 
 在系统设计中，采用最新 JDK17 + SpringBoot3&SpringCloud 微服务架构，构建高并发、大数据量下仍然能提供高效可靠的短链接生成服务。
@@ -56,15 +34,32 @@ URL。短链接通常只包含几个字符，而原始的长 URL 可能会非常
 
 ![](https://oss.open8gu.com/image-20231026132606180.png)
 
-## 加群沟通
+## 🔨 Run the Microservice
 
-开源不易，右上角点个 Star 鼓励一下吧！
+<b>Init Database</b>
 
-如果大家想要实时关注 SaaS 短链接更新的文章以及分享的干货的话，可以关注我的公众号：`马丁玩编程`。
+*首次启动项目执行，后续启动不需要*
 
-使用过程中有任何问题，或者对项目有什么建议，添加好友备注：`link`，领取项目学习资料，和 `4000+` 志同道合的朋友交流讨论。
+<b>1 )</b> 注释掉 `docker-compose.yml` 中的除mysql外的所有服务，然后执行 `docker compose up`启动数据库
 
-![](https://oss.open8gu.com/martin-tryoffer.png)
+<b>2 )</b> 连接数据库，执行`resources/database/link-data.sql`脚本，初始化数据
+
+<b>Run Application Locally</b>
+
+<b>1 )</b> Clone project `git clone https://github.com/mxwhth/shortlink.git`
+
+<b>2 )</b> Go to the project's home directory :  `cd shortlink`
+
+<b>3 )</b> Run startup script <b>`./startup.sh`</b></b> *Will start containers and services*
+
+<b>4 )</b> Visit `http://localhost:5173/home/space` and explore it.</b>
+
+### ❌ Stop the Microservice
+
+<b>1 )</b> Go to the project's home directory :  `cd shortlink`
+
+<b>2 )</b> Run shutdown script <b>`./shutdown.sh`</b></b> *Will kill services, shutdown containers and cleanup log files.*
+
 
 ## 项目质量怎么样？
 
@@ -81,18 +76,3 @@ URL。短链接通常只包含几个字符，而原始的长 URL 可能会非常
 
 项目实现过程中会充分考虑以上问题，最终实现高可用、可扩展、支持海并发以及存储的 SaaS 短链接系统。另外，会额外交付精美前端控制台页面，学生可用于校招、毕设等场景。
 
-可谓是出门面试，必备好项目！
-
-## 如何学习？
-
-我个人是偏向于通过文档进行学习，在写 12306 铁路购票系统的时候，写了大量的源码、设计以及从零到一的文档。最终呈现给用户的就是，内容接近`130`篇，文字`20万`的 12306 文档库。
-
-但是部分用户在学习过程中，更希望能够通过项目视频学习搭配文档的形式学习。大家都知道，咱们这里只要建议合理都会支持。所以我在开始写 SaaS 短链接项目时，结合大家的建议和想法，最终呈现给大家下面的成果。
-
-视频大概在 80 小节上下，课程总时长在 20-30 小时左右。跟着视频目录看下去，绝对能从零到一复刻出支持海量并发、海量存储的 SaaS 短链接系统。
-
-> 如果要问，那就是项目代码是我从零到一录视频时写的。
-
-短链接视频学习地址：[手摸手视频学习SaaS短链接项目](https://nageoffer.com/shortlink/video/)
-
-![](https://oss.open8gu.com/image-20231122173916783.png)

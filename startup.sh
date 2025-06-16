@@ -112,7 +112,19 @@ for SERVICE in "${SERVICES[@]}"; do
   wait_for_port "$PORT" "$SERVICE_NAME"
 done
 
-cd console-vue
-npm run dev
+echo "🚀 启动 Vue 前端服务..."
+
+# 项目根目录路径（可根据实际情况修改）
+PROJECT_DIR="console-vue"
+
+cd "$PROJECT_DIR"
+
+# 启动前端服务并保存进程号到 vue.pid
+nohup npm run dev > vue.log 2>&1 &
+
+# 保存进程号到 vue.pid 方便 shutdown.sh 使用
+echo $! > vue.pid
+
+echo "✅ Vue 服务已启动，日志输出到 vue.log"
 
 echo "🎉 所有容器与微服务均已成功启动！"
